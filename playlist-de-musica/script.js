@@ -57,16 +57,22 @@ const botaoAdicionarAoFim = document.querySelector('.botao-adicionar-ao-fim');
 const botaoTocarDepoisDessa = document.querySelector('.botao-tocar-depois-dessa');
 const botaoRemoverDaFila = document.querySelector('.botao-remover-da-fila');
 const botaoDesfazerUltima = document.querySelector('.botao-desfazer-ultima');
-const botaoFurar = document.querySelector
+const nomeChamada = document.querySelector('.nome-chamado');
+
+const iconeRemover = `
+<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+<path d="M6 6 L18 18 M18 6 L6 18"
+stroke="currentColor" stroke=width="3" stroke-linecap="round" />
+</svg>`;
 
 const musicas = ['Perfect Soul', 'Caramel', 'Bring me back to Eden']; // array com os nomes das músicas.
 /*---------------------------------------------------------------------------------*/
 
-
+const chamadas = []/
 /*-------------------------------------------------------------------------------------------
 funções que só devolvem
 -------------------------------------------------------------------------------------------*/
-function montarItensDaFila(.topofila) {
+function montarItensDaFila(topoFila) {
     let itens = '';
     for (let i = 0; i < topoFila.length; i++) {
         itens = itens + `<li>${topoFila[i]}</li>`;
@@ -87,6 +93,64 @@ function montarTextoDaContagem(Quantidade) {
 /*----------------------------------------------------------------------------------
 funções que mexem na tela 
 -----------------------------------------------------------------------------------*/
+function criarItemDaEspera(nome, posicao) {
+    const item = document.createElement('li');
+
+    const textoDoNome = document.createElement('button');
+    textoDoNome.type = 'button';
+    textoDoNome.textContent = nome;
+
+    const botaoDesistiu = document.createElement('button');
+    botaoDesistiu.type = 'button';
+    botaoDesistiu.classList.add('botao-remover');
+    
+    botaoDesistiu.innerHTML = iconeRemover;
+
+    botaoDesistiu.setAttribute('aria-label', 'Tirar ' + nome + ' da fila');
+    botaoDesistiu.addEventListener('click', function () {
+        espera.splice(posicao, 1);
+        aviso.textContent = nome + ' foi removido.';
+        renderizar();
+    });
+
+    item.appendChild(textoDoNome);
+    if (posicao === 0) {
+        const etiqueta = document.createElement('span');
+        etiqueta.textContent = 'proximo';
+        etiqueta.classList.add('etiqueta');
+        item.appendChild(etiqueta);
+    }
+    item.appendChild(botaoDesistiu);
+    return item;
+}
+function criarItemDaChamada(nomeMusica) {
+    const item = document.createElement('li');
+    item.textContent = nomeMusica;
+    return item;
+}
+
+
+function renderizar() {
+        telaLista.innerHTML= '';
+        for (let i = 0; i < espera.length; i++) {
+            telaLista.appendChild(criarItemDaEspera(espera[i], i));
+        
+        }
+        telaChamadas.innerHTML= '';
+        for (let i = 0; i < chamadas.length; i++) {
+            telaChamadas.appendChild(criarItemDaChamada(chamadas[i]));
+        }
+        if (chamadas.length === 0) {
+            telaNomeChamada.textContent = 'Nenhuma música';
+        } else {
+            telaNomeChamada.textContent = chamadas [chamadas.length - 1];
+        }
+        telaContagem.textContent = montarTextoDaContagem(espera.length);
+        
+        botaoproxima.disabled = espera.length === 0;
+
+    }
+
 function mostrarProximaMusica() {
     const lista = document.querySelector('.lista');
     lista.innerHTML = montarItensDaEspera(musicas);
@@ -99,6 +163,7 @@ function lerNomeMusica() {
 function limparCampo() {
     campoNome.value = '';
 }
+renderizar();
 
 function montarAvisoDoNovoNome(nome, espera) {
     if (nome === '') {
@@ -171,8 +236,6 @@ botaoproxima.addEventListener('click', function () {
     /*else (musicas.length === 0) {
         aviso.textContent = 'Nenhuma música na fila para avançar.';
         return; */
-    }
-
     const tocando = musicas.shift();
     tocandoAgora.textContent = tocando;
     aviso.textContent = 'Tocando agora: ' + tocando;
