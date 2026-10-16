@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de espera</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <main class="musica">
+
+        <header class="topoFila">
+            <h1>Na fila</h1>
+            <p class="contagem">Nenhuma música na fila.</p>
+        </header>
+
+        <form class="TocandoAgora">
+            <h2>Tocando agora</h2>
+            <p>Nada tocando</p>
+            <button type="button" class="botao-proxima">Próxima</button>
+        </form>
+
+        <form class="Comandos">
+            <h2>Comandos</h2>
+            <p>
+                <label for="nomeMusica">Nome da música</label>
+            <input type="text"  id="nomeMusica" placeholder="Digite aqui" class="campoNome">
+            </p>
+            <div class="botoes">
+            <button type="button" class="botao-adicionar-ao-fim">Adicionar ao fim</button>
+            <button type="button" class="botao-tocar-depois-dessa">Tocar depois dessa</button>
+            <button type="button" class="botao-remover-da-fila">Remover da fila</button>
+            <button type="button" class="botao-desfazer-ultima">Desfazer última</button>
+            </div>
+            <p class="aviso"></p>
+            </form>
+
+        <section class="Proxima">
+            <h2>A seguir</h2>
+            <ol class="lista">
+                <li>Perfect Soul</li>
+                <li>Caramel</li>
+                <li>Bring me back to Eden</li>
+            </ol>
+        </section>
+
+    </main>
+
+</body>
+
+</html>

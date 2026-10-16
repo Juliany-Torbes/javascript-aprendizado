@@ -1,0 +1,70 @@
+/* Sem estilização ainda: bordas e fundos só para enxergar
+   onde cada área do grid começa e termina. */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.musica {
+    display: grid;
+    gap: 12px;
+    max-width: 960px;
+    margin: 0 auto;
+
+    /* Celular: tudo empilhado. A chamada vem logo depois
+       do topo, porque é o que mais importa. */
+    grid-template-areas:
+        "topoFila"
+        "TocandoAgora"
+        "Comandos"
+        "Proxima";
+}
+
+.topoFila     { grid-area: topoFila; }
+.TocandoAgora { grid-area: TocandoAgora; }
+.Comandos   { grid-area: Comandos; }
+.Proxima  { grid-area: Proxima; }
+
+.topoFila,
+.TocandoAgora,
+.Comandos,
+.Proxima {
+    padding: 12px;
+    border: 2px solid #333333;
+}
+
+.topoFila     { background-color: #ffe8cc; }
+.TocandoAgora { background-color: #e7f5ff; }
+.Comandos   { background-color: #ebfbee; }
+.Proxima  { background-color: #fff0f6; }
+
+
+/* A partir de 800px: três colunas, a do meio mais larga. */
+
+@media (min-width: 800px) {
+
+    .musica {
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-areas:
+            "topoFila     topoFila   topoFila"
+            "TocandoAgora Comandos Proxima";
+    }
+
+}
+
+.lista li {
+    padding: 8px;
+}
+.lista li:nth-child(even) {
+    background-color: #ffffff;
+}
+.lista li:first-child {
+    font-weight: bold;
+}
+
